@@ -1,4 +1,7 @@
 #include <arduino.h>
+
+// Simulated memory module for the Zilog Z80
+
 // 16-bit address bus
 #define A0 12
 #define A1 14
@@ -40,6 +43,7 @@ void setup() {
     pinMode(CA, INPUT);    
     pinMode(CB, OUTPUT);
 
+    // wait for signal from RPi to begin
     while (true) {
         if (digitalRead(CA) == HIGH) {
             digitalWrite(CB, HIGH);
@@ -49,18 +53,21 @@ void setup() {
         }
     }
 
+    // begin reading in required frequency
     String binaryRate = "";
-
     while (binaryRate.length() < PAYLOAD_SIZE) {
         int bit = digitalRead(CA);
         binaryRate += (bitVal == HIGH ? "1" : "0");  
+        // signal to RPi for next value
         digitalWrite(CB, HIGH);
         delay(5);
         digitalWrite(CB, LOW);
     }
 
+    // reconfigure pin for memory controller
     pinMode(CB, INPUT);
 
+    // convert binary polling rate to int
     long pollingRate = strtol(binaryRate.c_str(), NULL, 2);
 
     Serial.print("Received Polling Rate: ");

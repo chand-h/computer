@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-# System to handle communication between a z80 CPU 
+# System to handle communication between a Z80 CPU 
 # and memory emulated on an ESP32 (which does not
 # have enough pins on its own)
 
@@ -23,11 +23,12 @@ _M1 = 8         # IN
 _RFSH = 7       # IN
 ENCODER_B = 12  # OUT
 
-# z80 clock in Hz
+# Z80 clock in Hz
 FREQ = 1
 HALF_PERIOD = 1 / (2 * FREQ)
-# because we don't have enough pins on the ESP32, 
-# it needs to synchronize with the RPi
+# because there are not enough pins on the ESP32, 
+# it needs to synchronize with the RPi to fully
+# communicate with the Z80
 MEMORY_POLLING_RATE = FREQ * 4
 PAYLOAD_SIZE = 24
 
@@ -51,7 +52,7 @@ def synchronize_esp32():
         time.sleep(0.01)
     print(f'Communicating with ESP32 at {MEMORY_POLLING_RATE} Hz.')
 
-# synchronize now before we reconfigure the pins
+# synchronize now before reconfiguring the pins
 synchronize_esp32()
 
 # GPIO setup
@@ -98,7 +99,7 @@ def mem_ins_encoder(val):
     GPIO.output(ENCODER_A, 0)
     GPIO.output(ENCODER_B, 0)
 
-# set up the interrupts for the z80 memory controls
+# set up the interrupts for the Z80 memory controls
 GPIO.attachInterrupt(GPIO.digitalPinToInterrupt(_IORQ), lambda: mem_ins_encoder(1), GPIO.FALLING)
 GPIO.attachInterrupt(GPIO.digitalPinToInterrupt(_MREQ), lambda: mem_ins_encoder(2), GPIO.FALLING)
 GPIO.attachInterrupt(GPIO.digitalPinToInterrupt(_HALT), lambda: mem_ins_encoder(3), GPIO.FALLING)
