@@ -11,19 +11,19 @@ half_period = 1 / (2 * frequency)
 GPIO.setmode(GPIO.BCM)
 
 # Set up the GPIO channels
-GPIO.setup(2, GPIO.OUT)
-GPIO.setup(3, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
+GPIO.setup(7, GPIO.OUT)
 
 try:
     while True:
         # Set GPIO HIGH
-        GPIO.output(2, GPIO.HIGH)
-        GPIO.output(3, GPIO.LOW)
+        GPIO.output(22, GPIO.HIGH)
+        GPIO.output(7, GPIO.LOW)
         time.sleep(half_period)
 
         # Set GPIO LOW
-        GPIO.output(2, GPIO.LOW)
-        GPIO.output(3, GPIO.HIGH)
+        GPIO.output(22, GPIO.LOW)
+        GPIO.output(7, GPIO.HIGH)
         time.sleep(half_period)
 
 except KeyboardInterrupt:
