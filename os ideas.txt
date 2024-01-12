@@ -1,0 +1,8 @@
+based on custom language 
+   custom parser and compiler for z80 instruction set
+   allow for embedded assembly:
+
+	code
+	vv
+	ASSEMBLY op,1
+	^^

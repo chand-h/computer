@@ -1,0 +1,30 @@
+__controller:
+5 button layout
+4 buttons attached to 8-bit shift regs
+
+layouts:
+    for navigating:
+	game:
+		< \ > \ OPT \ A \ B
+	TV remote style:
+		counterclockwise 90d, top to bottom
+		OPT \ UP \ DOWN \ SEL \ BACK
+		
+	flip-phone style:
+		auto-detect
+		A-F \ G-K \ L-P \ Q- \ V-Z
+		or
+		manual entry
+		A-F \ G-L \ M-S \ T-Z \ E
+    for typing and operation:
+	coded style:
+		fill out each slot then enter
+		0-3 \ 0-3 \ 0-3 \ 0-3 \ E -> 256 codes
+	chorded style:
+		press and hold combo of first 4 then release
+		do again then press enter
+		takes last 2 chords
+		0-1 \ 0-1 \ 0-1 \ 0-1 \ E -> 225 codes
+
+
+		
