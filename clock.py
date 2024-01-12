@@ -8,7 +8,7 @@ _RESET = 27     # OUT
 CLK = 22        # OUT
 _NMI = 10       # OUT
 _INT = 9        # OUT
-CUT = 11       # OUT
+ENCODER_A = 11  # OUT
 _IORQ = 14      # IN
 _MREQ = 15      # IN   
 _HALT = 18      # IN
@@ -17,7 +17,7 @@ _WR = 24        # IN
 _BUSACK = 25    # IN
 _M1 = 8         # IN
 _RFSH = 7       # IN
-SOUT = 12       # OUT
+ENCODER_B = 12  # OUT
 
 # z80 clock in Hz
 FREQ = 1
@@ -34,8 +34,8 @@ GPIO.setup(_RESET, GPIO.OUT)
 GPIO.setup(CLK, GPIO.OUT)
 GPIO.setup(_NMI, GPIO.OUT)
 GPIO.setup(_INT, GPIO.OUT)
-GPIO.setup(CUT, GPIO.OUT)
-GPIO.setup(SOUT, GPIO.OUT)
+GPIO.setup(ENCODER_A, GPIO.OUT)
+GPIO.setup(ENCODER_B, GPIO.OUT)
 
 GPIO.output(_WAIT, GPIO.LOW)
 GPIO.output(_BUSREQ, GPIO.LOW)
@@ -43,8 +43,8 @@ GPIO.output(_RESET, GPIO.LOW)
 GPIO.output(CLK, GPIO.LOW)
 GPIO.output(_NMI, GPIO.LOW)
 GPIO.output(_INT, GPIO.LOW)
-GPIO.output(CUT, GPIO.LOW)
-GPIO.output(SOUT, GPIO.LOW)
+GPIO.output(ENCODER_A, GPIO.LOW)
+GPIO.output(ENCODER_B, GPIO.LOW)
 
 GPIO.setup(_IORQ, GPIO.IN)
 GPIO.setup(_MREQ, GPIO.IN)
@@ -56,12 +56,7 @@ GPIO.setup(_M1, GPIO.IN)
 GPIO.setup(_RFSH, GPIO.IN)
 
 def mem_double_mux(val):
-    for i in range(val):
-        GPIO.output(SOUT, GPIO.HIGH)
-        time.sleep(HALF_PERIOD / SERIAL_STEPS)
-        GPIO.output(SOUT, GPIO.LOW)
-        time.sleep(HALF_PERIOD / SERIAL_STEPS)
-    GPIO.output(CUT, GPIO.HIGH)
+    pass
 
 
 def onIORQ():
