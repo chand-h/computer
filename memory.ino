@@ -27,32 +27,46 @@
 #define D6 17
 #define D7 4
 
-// serial cutoff (memory instructions from z80->RPi->ESP32)
-#define CUT 15
-// serial input
-#define SIN 13
+// RPi controller channel A
+#define CA 15
+// channel B
+#define CB 13
+
+#define PAYLOAD_SIZE = 24
 
 void setup() {
-  // Initialize Serial Communication
-  Serial.begin(115200);
+    Serial.begin(115200);
 
-  // Setup address bus pins as inputs
-  pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
-  pinMode(A2, INPUT);
-  // ... Continue for all address bus pins ...
+    pinMode(CA, INPUT);    
+    pinMode(CB, OUTPUT);
 
-  // Setup data bus pins - assuming they are inputs for now
-  pinMode(D0, INPUT);
-  pinMode(D1, INPUT);
-  pinMode(D2, INPUT);
-  // ... Continue for all data bus pins ...
+    while (true) {
+        if (digitalRead(CA) == HIGH) {
+            digitalWrite(CB, HIGH);
+            delay(5);
+            digitalWrite(CB, LOW);
+            break;
+        }
+    }
 
-  // Setup clock and serial input from Raspberry Pi as inputs
-  pinMode(CLK, INPUT);
-  pinMode(IN, INPUT);
+    String binaryRate = "";
+
+    while (binaryRate.length() < PAYLOAD_SIZE) {
+        int bit = digitalRead(CA);
+        binaryRate += (bitVal == HIGH ? "1" : "0");  
+        digitalWrite(CB, HIGH);
+        delay(5);
+        digitalWrite(CB, LOW);
+    }
+
+    pinMode(CB, INPUT);
+
+    long pollingRate = strtol(binaryRate.c_str(), NULL, 2);
+
+    Serial.print("Received Polling Rate: ");
+    Serial.println(pollingRate);
 }
 
 void loop() {
-  // Your code to handle the communication and processing
+    // Main loop code
 }
